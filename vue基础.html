@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue基础</title>
+</head>
+<body>
+    <div id='root'>
+        <h2>demo</h2>
+        <p id='world_name'>hellow {{name}}</p>
+
+        <h2>插值语法 1+1</h2>
+        <p id="chazhiyifa">1+1={{5+1}}</p>
+
+        <h2>指令语法：常见指令</h2>
+        <p>
+            <a v-bind:href="link_url">点我跳转到百度</a>
+            <li>v-bind 使用js里面的地址，单向数据绑定，简写为:</li>
+            <input type="text" placeholder="请输入学生姓名" :value='stu_name'> 
+            <span>姓名：{{stu_name}}</span>
+            <li>v-model 表单输入绑定。数据双向绑定，可从js流向html，也可从html流向js</li>
+            <input type="text" placeholder="请输入学生年龄" v-model='stu_age'>
+            <span>年龄：{{stu_age}}</span>
+        </p>
+    </div>
+
+    <div>
+        
+    </div>
+    
+    <script src="./vue.js">
+        // 导入vue
+    </script> 
+    
+    
+    <script> // demo：hellow world
+
+        // 组件对象
+        const componet = {
+            data(){
+                let name = 'world'; // 插值语法
+                let link_url = 'http://www.baidu.com'; // 指令函数，单向数据绑定
+                let stu_name = 'hellow';
+                let stu_age = '18'
+                return{
+                    name,
+                    link_url,
+                    stu_name,
+                    stu_age
+                } // 对象
+            } // 语句块，里面装的是js表达式、函数、变量声明
+            }
+        // 初始化vue
+        const app = Vue.createApp(componet)
+        // 挂载到选择元素上面
+        app.mount('#root')
+    </script>
+</body>
+</html>

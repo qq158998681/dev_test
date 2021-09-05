@@ -14,7 +14,7 @@
         <h2>插值语法 1+1</h2>
         <p id="chazhiyifa">1+1={{5+1}}</p>
 
-        <h2>指令语法：常见指令</h2>
+        <h2>指令语法bind、model</h2>
         <p>
             <a v-bind:href="link_url">点我跳转到百度</a>
             <li>v-bind 使用js里面的地址，单向数据绑定，简写为:</li>
@@ -23,7 +23,51 @@
             <li>v-model 表单输入绑定。数据双向绑定，可从js流向html，也可从html流向js</li>
             <input type="text" placeholder="请输入学生年龄" v-model='stu_age'>
             <span>年龄：{{stu_age}}</span>
+            <li>v-model拥有lazy模式，脱离焦点后进行同步</li>
+            <input type="text" placeholder="v-model的lazy模式" v-model.lazy='stu_enjoy'>
+            <span>爱好：{{stu_enjoy}}</span>
+            <li>v-model拥有number模式，v-model.number可以将输入内容转换为数字类型传给后台</li>
+            <li>v-model拥有trim模式，v-model.trim 自动去除首位空格</li>
         </p>
+        <p>
+            <h2>事件绑定,v-on:click='事件',点击后触发事件，简写@click='事件'</h2>
+            <button v-on:click="num++">点击加1</button>   
+            <!-- 简写@事件 -->
+            <p>数字：{{num}}</p>
+            <p>
+                简单计算器
+                <input v-model.number='value1'>
+                <input v-model.number='value2'>
+                <button @click='add'>计算求和结果</button>
+                <p>求和值{{res}}</p>
+                <p>keydown，按键按下后触发事件</p>
+                <p>keyup，按键弹起后触发事件</p>
+                <p>click，点击后触发事件</p>
+                <p>console.log(event.target.tagname) 获取标签名称</p>
+            </p>
+
+        <p>
+            <h2>条件渲染</h2>
+            <p>v-show 控制元素是否显示，性能开销小。v-if 控制元素的生成与销毁，性能开销较大</p>
+            <button @click='click_simple=!click_simple'>你是不是猪</button>
+            <p v-if='click_simple'>是</p>
+            <p v-else='click_simple'>不是</p>
+            <button @click='click_simple=!click_simple'>你是不是猪</button>
+            <p v-show='click_simple'>是</p>
+            <p></p>
+            <!-- <p v-else-if='click_simple'> 11111</p> -->
+        </p>
+
+        <p>
+            <h2>列表渲染</h2>
+            <p v-for="todo in todo_list">
+                {{todo}}
+            </p>
+        </p>
+        
+
+
+  
     </div>
 
     <div>
@@ -38,22 +82,41 @@
     <script> // demo：hellow world
 
         // 组件对象
-        const componet = {
+        const vm = {
             data(){
                 let name = 'world'; // 插值语法
                 let link_url = 'http://www.baidu.com'; // 指令函数，单向数据绑定
                 let stu_name = 'hellow';
                 let stu_age = '18'
+                let stu_enjoy = '羽毛球'
+                let num = 1
+                let value1 = 1
+                let value2 = 2
+                let res = 12
+                let click_simple = false
+                let todo_list = ['1', '2', '3']
                 return{
                     name,
                     link_url,
                     stu_name,
-                    stu_age
+                    stu_age,
+                    stu_enjoy,
+                    num,
+                    value1,
+                    value2,
+                    res,
+                    click_simple,
+                    todo_list
                 } // 对象
-            } // 语句块，里面装的是js表达式、函数、变量声明
-            }
+            },  // 语句块，里面装的是js表达式、函数、变量声明
+            methods:{
+                add(){
+                    this.res = this.value1 + this.value2
+                }
+            } 
+        }
         // 初始化vue
-        const app = Vue.createApp(componet)
+        const app = Vue.createApp(vm)
         // 挂载到选择元素上面
         app.mount('#root')
     </script>

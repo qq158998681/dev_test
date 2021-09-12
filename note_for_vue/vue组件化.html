@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue组件化</title>
+</head>
+<body>
+    <div id='root'>
+
+     <blog-post v-for="item in posts" 
+      :post="item"
+      ></blog-post>
+    </div>
+
+    <script src="./vue.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    posts: [
+                        {id: 1, title: '三国'},
+                        {id: 2, title: '水浒'},
+                        {id: 3, title: '红楼梦'}
+                    ]
+                }
+            }
+        })
+
+        const blog = {
+            props: ['post'],
+
+            computed: {
+                link(){
+                    return `/blog/${this.post.id}`
+                }
+            },
+            template:`
+            <li><a :href="link">{{post.title}}</a></li>
+            `
+            
+        }
+
+        app.component('blogPost',blog)
+        app.mount('#root')
+    </script>
+</body>
+</html>

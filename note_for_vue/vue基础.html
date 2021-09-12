@@ -65,6 +65,31 @@
             </p>
         </p>
         
+        <p>
+            <h2>三元表达式</h2>
+            <span>
+                js基本语法： ate?'第一个':'第二个' 如果ate为true，返回第一个，否则返回第二个
+                vue里面，为了简化，写在comoputed中定义一个方法，computed作为计算
+                computed和methods区别：computde会缓存结果，再次调用的时候直接返回不做计算，methods立即执行
+            </span>
+            <br>
+            <ol>{{simple_log}}</ol>
+            <button @click='simple_stauts=!simple_stauts'>翻转按钮</button>
+        </p>
+
+        <p>
+            <h2>
+                监听器
+            </h2>
+            <ol>监听器可以监测一些复杂数据，执行复杂的逻辑，基本语法watch下 监听的变量名(新变量，旧变量){判断语句}  </ol>
+            <input type="text" v-model='username' placeholder="请输入用户名">
+            <span>{{panduan}}</span>
+            <ol>常用场景，注册时第二次输入密码，两边密码是否一致</ol>
+            <input type="password" placeholder="请输入您的密码" v-model='psw1'>
+            <span>{{panduan1}}</span>
+            <input type="password" placeholder="请再次输入您的密码" v-model='psw2'>
+            <span>{{panduan2}}</span>
+        </p>
 
 
   
@@ -95,6 +120,13 @@
                 let res = 12
                 let click_simple = false
                 let todo_list = ['1', '2', '3']
+                let simple_stauts = true
+                let username = ''
+                let psw1 = ''
+                let psw2 = ''
+                let panduan = ''
+                let panduan1 = ''
+                let panduan2 = ''
                 return{
                     name,
                     link_url,
@@ -106,14 +138,50 @@
                     value2,
                     res,
                     click_simple,
-                    todo_list
+                    todo_list,
+                    simple_stauts,
+                    username,
+                    psw1,
+                    psw2,
+                    panduan,
+                    panduan1,
+                    panduan2
                 } // 对象
             },  // 语句块，里面装的是js表达式、函数、变量声明
             methods:{
                 add(){
                     this.res = this.value1 + this.value2
                 }
-            } 
+            },
+            computed:{
+                simple_log(){
+                    return this.simple_stauts?'第一个选项':'最后一个选项'
+                }
+            },
+            watch:{
+                username(new_name, old_name){
+                    if(new_name.length<8){
+                        this.panduan = '用户名不合法'
+                    }else{
+                        this.panduan = '用户名合法'
+                    }
+                },
+                psw1(new_psw1, old_psw1){
+                    if(new_psw1.length<8){
+                        this.panduan1 = '密码长度必须大于8位'
+                    }else{
+                        this.panduan1 = '密码合法'
+                    } 
+                },
+                psw2(new_psw2, old_psw2){
+                    if(new_psw2===this.psw1){
+                        this.panduan2 = ''
+                    }else{
+                        this.panduan2 = '两次输入密码不一致'
+                    }
+                }
+
+            }
         }
         // 初始化vue
         const app = Vue.createApp(vm)

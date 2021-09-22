@@ -13,10 +13,12 @@
         </h1>
         <div>
             <input type="text" placeholder="请输入您的待办事项" v-model.trim="input_obj">
-            <button @click='add(input_obj)'>确定</button>
-            <ol v-for='todo in todo_list'>
-                {{todo}}
-            </ol>
+            <button  @click='add(input_obj)'>确定</button>
+            <ul>
+                <todo v-for='(todo,index) in todo_list' :todo='todo' :index='index' :remove='remove(index)'></todo>
+                
+            </ul>
+
             <br>
             <span>您还剩余 {{todo_list.length}} 个待办事项</span>
             <button @click='clear_list()'>清空</button>
@@ -35,17 +37,34 @@
             },
             methods:{
                 add(task){
-            
+                    console.log('点新增了')
                     this.todo_list.push(task)
                     this.input_obj = ''
                 },
                 clear_list(){
                     this.todo_list=[]
+                },
+                remove(index){
+                    console.log("点x删除了")
+                    this.todo_list.splice(index, 1)
                 }
 
             }
         }
         const app = Vue.createApp(vm)
+        const todo = {
+            props:['todo', 'index', 'remove'],
+            template:`
+            
+                
+                <li>
+                    <span :index='index'>第{{index+1}}个待办事项：</span>
+                    {{todo}}
+                    <button @cilck='remove(index)'>x</button>
+                </li>
+            `
+        }
+        app.component('todo', todo)
         app.mount('#all')
     </script>
 </body>

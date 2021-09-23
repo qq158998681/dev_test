@@ -15,8 +15,8 @@
             <input type="text" placeholder="请输入您的待办事项" v-model.trim="input_obj">
             <button  @click='add(input_obj)'>确定</button>
             <ul>
-                <todo v-for='(todo,index) in todo_list' :todo='todo' :index='index' :remove='remove(index)'></todo>
-                
+                <todo v-for='(todo,index) in todo_list' :todo='todo' :index='index' @aaa='remove(index)'></todo>
+
             </ul>
 
             <br>
@@ -35,7 +35,7 @@
                     input_obj
                 }
             },
-            methods:{
+            methods: {
                 add(task){
                     console.log('点新增了')
                     this.todo_list.push(task)
@@ -52,19 +52,21 @@
             }
         }
         const app = Vue.createApp(vm)
-        const todo = {
-            props:['todo', 'index', 'remove'],
+        const todo_aa = {
+            props:['todo', 'index'],
             template:`
             
+                <div>
+                    <li>
+                        <span :index='index'>第{{index+1}}个待办事项：</span>
+                        {{todo}}
+                        <button @cilck="$emit('aaa')">x</button>
+                    </li> 
+                </div>
                 
-                <li>
-                    <span :index='index'>第{{index+1}}个待办事项：</span>
-                    {{todo}}
-                    <button @cilck='remove(index)'>x</button>
-                </li>
             `
         }
-        app.component('todo', todo)
+        app.component('todo', todo_aa)
         app.mount('#all')
     </script>
 </body>

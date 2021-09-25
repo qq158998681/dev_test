@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue组件化、插槽</title>
+</head>
+<body>
+    <div id="sunweixuanshizhuzhu">
+        <h1>vue组件的v-model使用</h1>
+        <li>vue组件化不能正常使用v-model，父子组件不能进行正常沟通，需要使用emits（固定写法），或者将v-model拆分为v-bind和监听</li>
+        <model-zujian v-model='aaa'></model-zujian>
+        <li>{{aaa}}</li>
+
+        <h1>插槽</h1>
+        <li>原则上组件标签内不可以嵌套内容，如果需要的话，只能使用插槽语法，组件内加入"'slot  /slot '"标签对即可，加入标签对的位置就是插槽的位置</li>
+        <model-zujian v-model='aaa'>
+            <h6>hellow VUE</h6>
+        </model-zujian>
+    </div>
+
+
+
+
+    <script src="./vue.js"></script>
+    <script>
+    
+    const app = Vue.createApp({
+        data(){
+            return {
+                aaa:''
+            }
+        }
+    })
+
+    app.component('model-zujian',{
+        props:['modelValue'],               // v-model传递过来的值名字为modelValue，固定写法
+        emits:['update:modelValue'],            // 固定语法
+        template:`
+            <div>
+                <input type="text" placeholder="请输入内容" :value='modelValue' @input="$emit('update:modelValue', $event.target.value )">
+                <slot></slot>      
+            </div>
+        `
+    })
+    app.mount('#sunweixuanshizhuzhu')
+    </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+1、node环境
+    官网下载即可，自带npm
+
+2、vue-cli
+    永久换源：npm config set registry https://registry.npm.taobao.org
+    检查换源是否成功：npm config get registry
+    安装：npm install -g @vue/cli
+    升级：npm update -g @vue/cli
+
+3、创建项目
+    创建：vue create study_vue
